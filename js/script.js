@@ -1,4 +1,4 @@
-// js/script.js - v8.1 - Fixed potential parsing issue
+// js/script.js - v8.1 - Fixed potential parsing issue (Functionality intact)
 
 document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('loginForm');
@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
             initializeDashboard();
         }
 
-        // *** CORRECTION START ***
         function initializeDashboard() {
             if (userNameDisplay) userNameDisplay.textContent = loggedInUser.name;
             if (userRoleDisplay) userRoleDisplay.textContent = loggedInUser.role;
@@ -55,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
             updateActionButtonsVisibility();
             setupAdminView();
         } // End of initializeDashboard
-        // *** CORRECTION END ***
 
         function setupAdminView() {
              if (loggedInUser && loggedInUser.role === 'Admin') {
