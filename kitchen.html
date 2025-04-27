@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cozinha - Bar Code</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body class="d-flex flex-column min-vh-100 kitchen-page">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#"> <i class="bi bi-activity me-2"></i> Bar Code - Cozinha</a>
+            <div class="ms-auto">
+                 <a href="dashboard.html" class="btn btn-outline-light btn-sm"><i class="bi bi-arrow-left"></i> Voltar ao Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4 flex-grow-1">
+        <h1 class="mb-4">Pedidos Ativos</h1>
+        <div id="kitchen-alert-placeholder"></div>
+        <div class="row" id="kitchen-orders-display">
+            <div class="col-12 text-center p-5">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="mt-2 text-muted">Carregando pedidos...</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="kitchen-footer bg-light text-center text-muted py-3 mt-auto border-top">
+         Bar Code - Bar e Restaurante © 2025
+    </footer>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/script.js"></script>
+</body>
+</html>
