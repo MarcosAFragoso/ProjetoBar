@@ -1,3 +1,5 @@
+// js/script.js - v7
+
 document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('loginForm');
     const usernameInput = document.getElementById('username');
@@ -26,7 +28,30 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!loggedInUser) { window.location.href = 'login.html'; } else { initializeDashboard(); }
 
         function initializeDashboard() { if (userNameDisplay) userNameDisplay.textContent = loggedInUser.name; if (userRoleDisplay) userRoleDisplay.textContent = loggedInUser.role; if (navbarUserName) navbarUserName.textContent = loggedInUser.name.split(' ')[0]; if (profileImageDisplay) { const savedImage = localStorage.getItem('userProfileImage_dataUrl'); if(savedImage) profileImageDisplay.src = savedImage; else profileImageDisplay.src = '../assets/profile.png'; } loadTablesData(); renderTableButtons(); renderProductList(); setupEventListeners(); updateActionButtonsVisibility(); setupAdminView(); }
-        function setupAdminView() { if (loggedInUser && loggedInUser.role === 'Admin') { if(sidebarProfileSection) sidebarProfileSection.style.display = 'none'; if(addProductCard) addProductCard.style.display = 'none'; if(sidebarTitle) sidebarTitle.textContent = 'Admin'; const allLinks = sidebarNavList.querySelectorAll('a[data-category]'); allLinks.forEach(link => link.style.display = 'none'); const logoutBtn = document.getElementById('logout-button'); if(logoutBtn && sidebarNavList){ const kitchenLink = document.createElement('a'); kitchenLink.href = 'kitchen.html'; kitchenLink.className = 'list-group-item list-group-item-action list-group-item-warning p-3 sidebar-text admin-link'; kitchenLink.title = 'Painel da Cozinha'; kitchenLink.innerHTML = '<i class="bi bi-clipboard2-data me-2"></i><span class="sidebar-text">Cozinha</span>'; sidebarNavList.insertBefore(kitchenLink, logoutBtn); const reportsLink = document.createElement('a'); reportsLink.href = 'reports.html'; reportsLink.className = 'list-group-item list-group-item-action list-group-item-info p-3 sidebar-text admin-link'; reportsLink.title = 'Relatórios'; reportsLink.innerHTML = '<i class="bi bi-graph-up me-2"></i><span class="sidebar-text">Relatórios</span>'; sidebarNavList.insertBefore(reportsLink, logoutBtn); } } }
+
+        function setupAdminView() {
+            if (loggedInUser && loggedInUser.role === 'Admin') {
+                if(sidebarProfileSection) sidebarProfileSection.style.display = 'none';
+                if(addProductCard) addProductCard.style.display = 'none';
+                if(sidebarTitle) sidebarTitle.textContent = 'Admin';
+
+                const allCategoryLinks = sidebarNavList.querySelectorAll('a[data-category]');
+                allCategoryLinks.forEach(link => link.style.display = 'none'); // Esconde links de categoria
+
+                const logoutBtn = document.getElementById('logout-button');
+                if(logoutBtn && sidebarNavList){
+                    const kitchenLink = document.createElement('a');
+                    kitchenLink.href = 'kitchen.html';
+                    kitchenLink.className = 'list-group-item list-group-item-action list-group-item-warning p-3 sidebar-text admin-link'; // Usando warning para destacar
+                    kitchenLink.title = 'Painel da Cozinha';
+                    // Adiciona o span para o texto sumir quando recolhido
+                    kitchenLink.innerHTML = '<i class="bi bi-clipboard2-data me-2"></i><span class="sidebar-text">Cozinha</span>';
+                    sidebarNavList.insertBefore(kitchenLink, logoutBtn);
+                    // Não adiciona mais o link de Relatórios
+                }
+            }
+        }
+
         function setupEventListeners() { if (menuToggle && wrapper) menuToggle.addEventListener('click', handleMenuToggle); if (logoutButton) logoutButton.addEventListener('click', handleLogout); if (sidebarNavList && loggedInUser.role !== 'Admin') { sidebarNavList.addEventListener('click', handleCategoryFilterClick); } if (closeAccountBtn) closeAccountBtn.addEventListener('click', handleCloseAccount); if (reopenTableBtn) reopenTableBtn.addEventListener('click', handleReopenTable); if (finalizeTableBtn) finalizeTableBtn.addEventListener('click', handleFinalizeTable); }
         function handleMenuToggle(e) { e.preventDefault(); if (wrapper) wrapper.classList.toggle('toggled'); }
         function handleLogout(e) { e.preventDefault(); localStorage.removeItem('loggedInUser'); localStorage.removeItem('userProfileImage_dataUrl'); window.location.href = 'login.html'; }
@@ -45,67 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function handleCloseAccount() { if (!selectedTableId || !tablesData[selectedTableId]) return; const table = tablesData[selectedTableId]; if (table.status === 'Ocupada' && table.items.length > 0) { table.status = 'Fechamento'; updateTableButtonStatus(selectedTableId); displayTableOrder(selectedTableId); updateActionButtonsVisibility(selectedTableId); saveTablesData(); showAlert(`Mesa ${selectedTableId} para fechamento.`, 'info', alertPlaceholderDashboard); } }
         function handleReopenTable() { if (!selectedTableId || !tablesData[selectedTableId]) return; const table = tablesData[selectedTableId]; if (table.status === 'Fechamento') { table.status = 'Ocupada'; updateTableButtonStatus(selectedTableId); displayTableOrder(selectedTableId); updateActionButtonsVisibility(selectedTableId); saveTablesData(); showAlert(`Mesa ${selectedTableId} reaberta.`, 'success', alertPlaceholderDashboard); } }
         function handleFinalizeTable() { if (!selectedTableId || !tablesData[selectedTableId]) return; const table = tablesData[selectedTableId]; if (table.status === 'Fechamento') { generateReceipt(selectedTableId, table); table.items = []; table.total = 0.0; table.status = 'Livre'; updateTableButtonStatus(selectedTableId); displayTableOrder(selectedTableId); updateActionButtonsVisibility(selectedTableId); saveTablesData(); showAlert(`Mesa ${selectedTableId} finalizada. Recibo gerado.`, 'success', alertPlaceholderDashboard); } }
-
-        function generateReceipt(tableId, tableData) {
-            const now = new Date();
-            const dateTimeString = now.toLocaleString('pt-BR');
-            let receiptHTML = `
-                <html>
-                <head><title>Recibo Mesa ${tableId}</title>
-                <style>
-                    body { font-family: sans-serif; margin: 20px; }
-                    h1, h2 { text-align: center; margin-bottom: 5px;}
-                    .header p { text-align: center; margin: 2px 0; font-size: 0.9em;}
-                    hr { border: none; border-top: 1px dashed #000; margin: 15px 0; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9em; }
-                    th, td { text-align: left; padding: 4px 2px; }
-                    th:last-child, td:last-child { text-align: right; }
-                    .total { font-weight: bold; font-size: 1.1em; margin-top: 15px; text-align: right; }
-                    .footer { margin-top: 20px; text-align: center; font-size: 0.8em; }
-                    @media print { button { display: none; } }
-                </style>
-                </head>
-                <body>
-                    <div class="header">
-                         <h2>Bar Code</h2>
-                         <p>Rua Fictícia, 123 - Centro</p>
-                         <p>CNPJ: 99.999.999/0001-99</p>
-                         <p>------------------------------</p>
-                         <h1>Mesa ${tableId}</h1>
-                         <p>Data/Hora: ${dateTimeString}</p>
-                         <p>------------------------------</p>
-                    </div>
-                    <h3>Itens Consumidos:</h3>
-                    <table>
-                        <thead><tr><th>Item</th><th style="text-align:right;">Valor</th></tr></thead>
-                        <tbody>`;
-            tableData.items.forEach(item => {
-                receiptHTML += `<tr><td>${item.name || '?'}</td><td>${formatCurrency(item.price || 0)}</td></tr>`;
-            });
-            receiptHTML += `
-                        </tbody>
-                    </table>
-                    <hr>
-                    <div class="total">TOTAL: ${formatCurrency(tableData.total || 0)}</div>
-                    <div class="footer">
-                        <p>Obrigado pela preferência!</p>
-                        <p>Volte Sempre!</p>
-                    </div>
-                     <div style="text-align:center; margin-top: 30px;">
-                         <button onclick="window.print()">Imprimir Recibo</button>
-                         <button onclick="window.close()">Fechar</button>
-                     </div>
-                </body></html>`;
-
-            const receiptWindow = window.open('', '_blank', 'width=400,height=600');
-            if (receiptWindow) {
-                 receiptWindow.document.write(receiptHTML);
-                 receiptWindow.document.close();
-                 // receiptWindow.print(); // Descomente para tentar imprimir automaticamente
-            } else {
-                 showAlert('Não foi possível abrir a janela do recibo. Verifique bloqueadores de pop-up.', 'warning', alertPlaceholderDashboard);
-            }
-        }
+        function generateReceipt(tableId, tableData) { const now = new Date(); const dateTimeString = now.toLocaleString('pt-BR'); let receiptHTML = `<html><head><title>Recibo Mesa ${tableId}</title><style>body{font-family:monospace;margin:15px;font-size:10pt;}h2,p.center{text-align:center;margin:3px 0;}hr{border:none;border-top:1px dashed #000;margin:10px 0;}table{width:100%;border-collapse:collapse;margin-top:5px;}td{padding:2px 0;}td:last-child{text-align:right;}.total{font-weight:bold;margin-top:10px;text-align:right;}@media print{button{display:none;}}</style></head><body><h2>Bar Code</h2><p class="center">Rua Fictícia, 123</p><p class="center">CNPJ: 99.999.999/0001-99</p><hr><h2>Mesa ${tableId}</h2><p class="center">Data/Hora: ${dateTimeString}</p><hr><table><thead><tr><th>Item</th><th>Valor</th></tr></thead><tbody>`; tableData.items.forEach(item => { receiptHTML += `<tr><td>${item.name || '?'}</td><td>${formatCurrency(item.price || 0)}</td></tr>`; }); receiptHTML += `</tbody></table><hr><div class="total">TOTAL: ${formatCurrency(tableData.total || 0)}</div><hr><p class="center">Obrigado!</p><div style="text-align:center; margin-top:20px;"><button onclick="window.print()">Imprimir</button> <button onclick="window.close()">Fechar</button></div></body></html>`; const receiptWindow = window.open('', '_blank', 'width=300,height=500'); if (receiptWindow) { receiptWindow.document.write(receiptHTML); receiptWindow.document.close(); } else { showAlert('Pop-up bloqueado? Não foi possível abrir recibo.', 'warning', alertPlaceholderDashboard); } }
     }
 
     if (kitchenOrdersDisplay) {
@@ -114,11 +79,5 @@ document.addEventListener('DOMContentLoaded', function () {
         else { loadAndRenderKitchenOrders(); }
     }
 
-    function loadAndRenderKitchenOrders() {
-        const kitchenData = JSON.parse(localStorage.getItem('restaurantTablesData') || '{}');
-        kitchenOrdersDisplay.innerHTML = ''; let activeOrdersFound = false;
-        const sortedTableIds = Object.keys(kitchenData).sort((a, b) => parseInt(a) - parseInt(b));
-        sortedTableIds.forEach(tableId => { const table = kitchenData[tableId]; if (table && (table.status === 'Ocupada' || table.status === 'Fechamento') && table.items && table.items.length > 0) { activeOrdersFound = true; const card = document.createElement('div'); card.className = 'col-md-6 col-lg-4'; let itemsHtml = '<ul class="list-unstyled kitchen-item-list">'; table.items.forEach(item => { itemsHtml += `<li><i class="bi bi-dot"></i> ${item.name || '?'}</li>`; }); itemsHtml += '</ul>'; card.innerHTML = `<div class="card kitchen-order-card shadow-sm"> <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center"> <h5 class="mb-0">Mesa ${tableId}</h5> <span class="badge bg-${table.status === 'Fechamento' ? 'warning text-dark' : 'light text-dark'}">${table.status}</span> </div> <div class="card-body"> ${itemsHtml} </div> </div>`; kitchenOrdersDisplay.appendChild(card); } });
-        if (!activeOrdersFound) { kitchenOrdersDisplay.innerHTML = '<div class="col-12"><div class="alert alert-info text-center">Nenhum pedido ativo.</div></div>'; }
-    }
+    function loadAndRenderKitchenOrders() { const kitchenData = JSON.parse(localStorage.getItem('restaurantTablesData') || '{}'); kitchenOrdersDisplay.innerHTML = ''; let activeOrdersFound = false; const sortedTableIds = Object.keys(kitchenData).sort((a, b) => parseInt(a) - parseInt(b)); sortedTableIds.forEach(tableId => { const table = kitchenData[tableId]; if (table && (table.status === 'Ocupada' || table.status === 'Fechamento') && table.items && table.items.length > 0) { activeOrdersFound = true; const card = document.createElement('div'); card.className = 'col-md-6 col-lg-4'; let itemsHtml = '<ul class="list-unstyled kitchen-item-list">'; table.items.forEach(item => { itemsHtml += `<li><i class="bi bi-dot"></i> ${item.name || '?'}</li>`; }); itemsHtml += '</ul>'; card.innerHTML = `<div class="card kitchen-order-card shadow-sm"> <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center"> <h5 class="mb-0">Mesa ${tableId}</h5> <span class="badge bg-${table.status === 'Fechamento' ? 'warning text-dark' : 'light text-dark'}">${table.status}</span> </div> <div class="card-body"> ${itemsHtml} </div> </div>`; kitchenOrdersDisplay.appendChild(card); } }); if (!activeOrdersFound) { kitchenOrdersDisplay.innerHTML = '<div class="col-12"><div class="alert alert-info text-center">Nenhum pedido ativo.</div></div>'; } }
 });
