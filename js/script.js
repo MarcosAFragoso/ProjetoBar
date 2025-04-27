@@ -1,5 +1,3 @@
-// js/script.js - v8.1 - Fixed potential parsing issue (Functionality intact)
-
 document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('loginForm');
     const usernameInput = document.getElementById('username');
@@ -42,18 +40,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (savedImage) {
                     profileImageDisplay.src = savedImage;
                 } else {
-                    profileImageDisplay.src = 'assets/profile.png'; // Default image path
+                    profileImageDisplay.src = 'assets/profile.png'; 
                 }
-            } // End of if(profileImageDisplay) block
-
-            // Ensure subsequent calls are clearly separated
+            }
+            
             loadTablesData();
             renderTableButtons();
             renderProductList();
             setupEventListeners();
             updateActionButtonsVisibility();
             setupAdminView();
-        } // End of initializeDashboard
+        } 
 
         function setupAdminView() {
              if (loggedInUser && loggedInUser.role === 'Admin') {
@@ -65,14 +62,14 @@ document.addEventListener('DOMContentLoaded', function () {
                  const logoutBtn = document.getElementById('logout-button');
                  if(logoutBtn && sidebarNavList){
                      const kitchenLink = document.createElement('a');
-                     kitchenLink.href = 'kitchen.html'; // Link já deve estar OK
+                     kitchenLink.href = 'kitchen.html'; 
                      kitchenLink.className = 'list-group-item list-group-item-action list-group-item-warning p-3 sidebar-text admin-link';
                      kitchenLink.title = 'Painel da Cozinha';
                      kitchenLink.innerHTML = '<i class="bi bi-clipboard2-data me-2"></i><span class="sidebar-text">Cozinha</span>';
                      sidebarNavList.insertBefore(kitchenLink, logoutBtn);
                  }
              }
-         } // End of setupAdminView
+         } 
 
         function setupEventListeners() {
              if (menuToggle && wrapper) menuToggle.addEventListener('click', handleMenuToggle);
@@ -83,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
              if (closeAccountBtn) closeAccountBtn.addEventListener('click', handleCloseAccount);
              if (reopenTableBtn) reopenTableBtn.addEventListener('click', handleReopenTable);
              if (finalizeTableBtn) finalizeTableBtn.addEventListener('click', handleFinalizeTable);
-         } // End of setupEventListeners
+         } 
 
         function handleMenuToggle(e) { e.preventDefault(); if (wrapper) wrapper.classList.toggle('toggled'); }
         function handleLogout(e) { e.preventDefault(); localStorage.removeItem('loggedInUser'); localStorage.removeItem('userProfileImage_dataUrl'); window.location.href = 'index.html'; }
@@ -103,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function handleReopenTable() { if (!selectedTableId || !tablesData[selectedTableId]) return; const table = tablesData[selectedTableId]; if (table.status === 'Fechamento') { table.status = 'Ocupada'; updateTableButtonStatus(selectedTableId); displayTableOrder(selectedTableId); updateActionButtonsVisibility(selectedTableId); saveTablesData(); showAlert(`Mesa ${selectedTableId} reaberta.`, 'success', alertPlaceholderDashboard); } }
         function handleFinalizeTable() { if (!selectedTableId || !tablesData[selectedTableId]) return; const table = tablesData[selectedTableId]; if (table.status === 'Fechamento') { generateReceipt(selectedTableId, table); table.items = []; table.total = 0.0; table.status = 'Livre'; updateTableButtonStatus(selectedTableId); displayTableOrder(selectedTableId); updateActionButtonsVisibility(selectedTableId); saveTablesData(); showAlert(`Mesa ${selectedTableId} finalizada. Recibo gerado.`, 'success', alertPlaceholderDashboard); } }
         function generateReceipt(tableId, tableData) { const now = new Date(); const dateTimeString = now.toLocaleString('pt-BR'); let receiptHTML = `<html><head><title>Recibo Mesa ${tableId}</title><style>body{font-family:monospace;margin:15px;font-size:10pt;}h2,p.center{text-align:center;margin:3px 0;}hr{border:none;border-top:1px dashed #000;margin:10px 0;}table{width:100%;border-collapse:collapse;margin-top:5px;}td{padding:2px 0;}td:last-child{text-align:right;}.total{font-weight:bold;margin-top:10px;text-align:right;}@media print{button{display:none;}}</style></head><body><h2>Bar Code</h2><p class="center">Rua Fictícia, 123</p><p class="center">CNPJ: 99.999.999/0001-99</p><hr><h2>Mesa ${tableId}</h2><p class="center">Data/Hora: ${dateTimeString}</p><hr><table><thead><tr><th>Item</th><th>Valor</th></tr></thead><tbody>`; tableData.items.forEach(item => { receiptHTML += `<tr><td>${item.name || '?'}</td><td>${formatCurrency(item.price || 0)}</td></tr>`; }); receiptHTML += `</tbody></table><hr><div class="total">TOTAL: ${formatCurrency(tableData.total || 0)}</div><hr><p class="center">Obrigado!</p><div style="text-align:center; margin-top:20px;"><button onclick="window.print()">Imprimir</button> <button onclick="window.close()">Fechar</button></div></body></html>`; const receiptWindow = window.open('', '_blank', 'width=300,height=500'); if (receiptWindow) { receiptWindow.document.write(receiptHTML); receiptWindow.document.close(); } else { showAlert('Pop-up bloqueado? Não foi possível abrir recibo.', 'warning', alertPlaceholderDashboard); } }
-    } // End of: if (wrapper && menuToggle && tablesArea && sidebarNavList)
+    } 
 
     if (kitchenOrdersDisplay) {
         const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
@@ -146,6 +143,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!activeOrdersFound) {
             kitchenOrdersDisplay.innerHTML = '<div class="col-12"><div class="alert alert-info text-center">Nenhum pedido ativo.</div></div>';
         }
-    } // End of loadAndRenderKitchenOrders
+    } 
 
-}); // End of DOMContentLoaded listener
+}); 
