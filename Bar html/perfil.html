@@ -13,145 +13,40 @@
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
                 <div class="card shadow-sm">
-                    <div class="card-header">
-                        <h2 class="h4 mb-0">Editar Perfil</h2>
-                    </div>
+                    <div class="card-header"><h2 class="h4 mb-0">Editar Perfil</h2></div>
                     <div class="card-body">
                          <div id="profile-alert-placeholder" class="mb-3"></div>
-                         <div class="text-center mb-4">
-                             <img src="../assets/profile.png" alt="Foto Atual" id="current-profile-image" class="rounded-circle img-thumbnail" style="width: 120px; height: 120px; object-fit: cover;">
-                         </div>
+                         <div class="text-center mb-4"><img src="../assets/profile.png" alt="Foto Atual" id="current-profile-image" class="rounded-circle img-thumbnail" style="width: 120px; height: 120px; object-fit: cover;"></div>
                         <form id="profileForm" novalidate>
-                            <div class="mb-3">
-                                <label for="profileName" class="form-label">Nome Completo</label>
-                                <input type="text" class="form-control" id="profileName" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="profileRole" class="form-label">Cargo</label>
-                                <input type="text" class="form-control" id="profileRole" disabled readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label for="profilePassword" class="form-label">Nova Senha <small class="text-muted">(opcional)</small></label>
-                                <input type="password" class="form-control" id="profilePassword" placeholder="Deixe em branco para manter a atual">
-                            </div>
-                             <div class="mb-3">
-                                <label for="profileConfirmPassword" class="form-label">Confirmar Nova Senha</label>
-                                <input type="password" class="form-control" id="profileConfirmPassword" placeholder="Repita a nova senha">
-                            </div>
-                            <div class="mb-3">
-                                 <label for="profileImageInput" class="form-label">Alterar Foto <small class="text-muted">(PNG ou JPG)</small></label>
-                                 <input class="form-control" type="file" id="profileImageInput" accept="image/png, image/jpeg">
-                             </div>
+                            <div class="mb-3"><label for="profileName" class="form-label">Nome Completo</label><input type="text" class="form-control" id="profileName" required></div>
+                            <div class="mb-3"><label for="profileRole" class="form-label">Cargo</label><input type="text" class="form-control" id="profileRole" disabled readonly></div>
+                            <div class="mb-3"><label for="profilePassword" class="form-label">Nova Senha <small class="text-muted">(opcional)</small></label><input type="password" class="form-control" id="profilePassword" placeholder="Deixe em branco"></div>
+                             <div class="mb-3"><label for="profileConfirmPassword" class="form-label">Confirmar Nova Senha</label><input type="password" class="form-control" id="profileConfirmPassword" placeholder="Repita a nova senha"></div>
+                            <div class="mb-3"><label for="profileImageInput" class="form-label">Alterar Foto <small class="text-muted">(PNG/JPG)</small></label><input class="form-control" type="file" id="profileImageInput" accept="image/png, image/jpeg"></div>
                             <hr>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <a href="dashboard.html" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
-                                <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Salvar Alterações</button>
-                            </div>
+                            <div class="d-flex justify-content-between align-items-center"><a href="dashboard.html" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar</a><button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Salvar</button></div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <footer class="bg-light text-center text-muted py-3 mt-auto border-top">
-        Bar Code - Bar e Restaurante © 2025
-   </footer>
-
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const profileForm = document.getElementById('profileForm');
-            const nameInput = document.getElementById('profileName');
-            const roleInput = document.getElementById('profileRole');
-            const passwordInput = document.getElementById('profilePassword');
-            const confirmPasswordInput = document.getElementById('profileConfirmPassword');
-            const imageInput = document.getElementById('profileImageInput');
-            const currentImage = document.getElementById('current-profile-image');
-            const alertPlaceholderProfile = document.getElementById('profile-alert-placeholder');
-
+            const profileForm = document.getElementById('profileForm'); const nameInput = document.getElementById('profileName'); const roleInput = document.getElementById('profileRole'); const passwordInput = document.getElementById('profilePassword'); const confirmPasswordInput = document.getElementById('profileConfirmPassword'); const imageInput = document.getElementById('profileImageInput'); const currentImage = document.getElementById('current-profile-image'); const alertPlaceholderProfile = document.getElementById('profile-alert-placeholder');
             const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-
             if (loggedInUser) {
-                if(nameInput) nameInput.value = loggedInUser.name || '';
-                if(roleInput) roleInput.value = loggedInUser.role || '';
-                const savedImage = localStorage.getItem('userProfileImage_dataUrl');
-                if (savedImage && currentImage) {
-                   currentImage.src = savedImage;
-                } else if (currentImage) {
-                   currentImage.src = '../assets/profile.png';
-                }
+                if(nameInput) nameInput.value = loggedInUser.name || ''; if(roleInput) roleInput.value = loggedInUser.role || ''; const savedImage = localStorage.getItem('userProfileImage_dataUrl'); if (savedImage && currentImage) { currentImage.src = savedImage; } else if (currentImage) { currentImage.src = '../assets/profile.png'; }
             } else {
-                 if(typeof showAlert === 'function'){
-                     showAlert("Sessão não encontrada. Faça login.", "warning", alertPlaceholderProfile);
-                 }
-                 setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+                 if(typeof showAlert === 'function') showAlert("Sessão não encontrada. Faça login.", "warning", alertPlaceholderProfile);
+                 // **** REDIRECIONAMENTO ATUALIZADO ****
+                 setTimeout(() => { window.location.href = 'index.html'; }, 2000);
             }
-
-             if (imageInput && currentImage) {
-                 imageInput.addEventListener('change', function(event) {
-                     const file = event.target.files[0];
-                     if (file && file.type.startsWith('image/')) {
-                         const reader = new FileReader();
-                         reader.onload = function(e) { currentImage.src = e.target.result; }
-                         reader.onerror = function(e) { console.error("FileReader error:", e); if(typeof showAlert === 'function') showAlert("Erro ao ler o arquivo de imagem.", "danger", alertPlaceholderProfile); }
-                         reader.readAsDataURL(file);
-                     } else if (file) {
-                         if(typeof showAlert === 'function') showAlert("Selecione um arquivo PNG ou JPG.", "warning", alertPlaceholderProfile);
-                         imageInput.value = '';
-                     }
-                 });
-             }
-
-            if(profileForm) {
-                profileForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    if(alertPlaceholderProfile) alertPlaceholderProfile.innerHTML = '';
-
-                    const newName = nameInput.value.trim();
-                    const newPassword = passwordInput.value;
-                    const confirmPassword = confirmPasswordInput.value;
-                    const newImageFile = imageInput.files[0];
-                    const imageDataUrl = currentImage.src; // Pega a src atual (pode ser a pré-visualização)
-
-                    if (!newName) { if(typeof showAlert === 'function') showAlert("O nome não pode ficar em branco.", "warning", alertPlaceholderProfile); return; }
-                    if (newPassword && newPassword !== confirmPassword) { if(typeof showAlert === 'function') showAlert("As novas senhas não coincidem.", "warning", alertPlaceholderProfile); return; }
-                    if (newPassword && newPassword.length < 3) { if(typeof showAlert === 'function') showAlert("A nova senha deve ter pelo menos 3 caracteres.", "warning", alertPlaceholderProfile); return; }
-
-                    console.log("Salvando perfil...");
-                    try {
-                        loggedInUser.name = newName;
-                        if (newPassword) { loggedInUser.password = newPassword; console.warn("Senha atualizada (DEMO ONLY)");}
-
-                        // Salva a imagem APENAS se uma NOVA foi carregada e convertida para dataURL
-                        if (newImageFile && imageDataUrl && imageDataUrl.startsWith('data:image')) {
-                            localStorage.setItem('userProfileImage_dataUrl', imageDataUrl);
-                            console.log("Nova imagem salva no localStorage.");
-                        } else if (!newImageFile) {
-                            // Se nenhum arquivo novo foi selecionado, não altera a imagem salva.
-                            console.log("Nenhuma imagem nova selecionada, mantendo a existente (ou default).");
-                        } else {
-                            // Se um arquivo foi selecionado mas não é dataURL (erro no preview?), não salva.
-                            console.warn("Tentativa de salvar imagem, mas src não é dataURL.");
-                        }
-
-                        localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
-
-                        if(typeof showAlert === 'function') showAlert("Perfil atualizado com sucesso!", "success", alertPlaceholderProfile);
-                        console.log("Perfil salvo:", loggedInUser);
-
-                        passwordInput.value = '';
-                        confirmPasswordInput.value = '';
-                        imageInput.value = '';
-
-                    } catch (error) {
-                         console.error("Erro ao salvar perfil:", error);
-                         if(typeof showAlert === 'function') showAlert("Erro ao salvar o perfil.", "danger", alertPlaceholderProfile);
-                    }
-                });
-            }
+             if (imageInput && currentImage) { imageInput.addEventListener('change', function(event) { const file = event.target.files[0]; if (file && file.type.startsWith('image/')) { const reader = new FileReader(); reader.onload = function(e) { currentImage.src = e.target.result; }; reader.onerror = function(e) { if(typeof showAlert === 'function') showAlert("Erro ao ler imagem.", "danger", alertPlaceholderProfile); }; reader.readAsDataURL(file); } else if (file) { if(typeof showAlert === 'function') showAlert("Selecione PNG ou JPG.", "warning", alertPlaceholderProfile); imageInput.value = ''; } }); }
+            if(profileForm) { profileForm.addEventListener('submit', (e) => { e.preventDefault(); if(alertPlaceholderProfile) alertPlaceholderProfile.innerHTML = ''; const newName = nameInput.value.trim(); const newPassword = passwordInput.value; const confirmPassword = confirmPasswordInput.value; const newImageFile = imageInput.files[0]; const imageDataUrl = currentImage.src; if (!newName) { if(typeof showAlert === 'function') showAlert("Nome em branco.", "warning", alertPlaceholderProfile); return; } if (newPassword && newPassword !== confirmPassword) { if(typeof showAlert === 'function') showAlert("Senhas não coincidem.", "warning", alertPlaceholderProfile); return; } if (newPassword && newPassword.length < 3) { if(typeof showAlert === 'function') showAlert("Senha curta (mín 3).", "warning", alertPlaceholderProfile); return; } try { loggedInUser.name = newName; if (newPassword) { loggedInUser.password = newPassword; } if (newImageFile && imageDataUrl && imageDataUrl.startsWith('data:image')) { localStorage.setItem('userProfileImage_dataUrl', imageDataUrl); } localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser)); if(typeof showAlert === 'function') showAlert("Perfil atualizado!", "success", alertPlaceholderProfile); passwordInput.value = ''; confirmPasswordInput.value = ''; imageInput.value = ''; } catch (error) { if(typeof showAlert === 'function') showAlert("Erro ao salvar.", "danger", alertPlaceholderProfile); } }); }
         });
      </script>
-
 </body>
 </html>
