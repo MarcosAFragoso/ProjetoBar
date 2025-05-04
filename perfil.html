@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Perfil - Bar Code</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet"> 
-    <link rel="stylesheet" href="css/style.css"> 
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
                     <div class="card-header"><h2 class="h4 mb-0">Editar Perfil</h2></div>
                     <div class="card-body">
                          <div id="profile-alert-placeholder" class="mb-3"></div>
-                         <div class="text-center mb-4"><img src="assets/profile.png" alt="Foto Atual" id="current-profile-image" class="rounded-circle img-thumbnail" style="width: 120px; height: 120px; object-fit: cover;"></div> 
+                         <div class="text-center mb-4"><img src="assets/profile.png" alt="Foto Atual" id="current-profile-image" class="rounded-circle img-thumbnail" style="width: 120px; height: 120px; object-fit: cover;"></div>
                         <form id="profileForm" novalidate>
                             <div class="mb-3"><label for="profileName" class="form-label">Nome Completo</label><input type="text" class="form-control" id="profileName" required></div>
                             <div class="mb-3"><label for="profileRole" class="form-label">Cargo</label><input type="text" class="form-control" id="profileRole" disabled readonly></div>
@@ -34,21 +34,7 @@
 
     <footer class="perfil-footer bg-white text-center text-muted py-3 mt-auto border-top">Bar Code - Bar e Restaurante © 2025</footer>
 
-    <script src="js/bootstrap.bundle.min.js"></script> 
-    <script src="js/script.js"></script> 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const profileForm = document.getElementById('profileForm'); const nameInput = document.getElementById('profileName'); const roleInput = document.getElementById('profileRole'); const passwordInput = document.getElementById('profilePassword'); const confirmPasswordInput = document.getElementById('profileConfirmPassword'); const imageInput = document.getElementById('profileImageInput'); const currentImage = document.getElementById('current-profile-image'); const alertPlaceholderProfile = document.getElementById('profile-alert-placeholder');
-            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-            if (loggedInUser) {
-                if(nameInput) nameInput.value = loggedInUser.name || ''; if(roleInput) roleInput.value = loggedInUser.role || ''; const savedImage = localStorage.getItem('userProfileImage_dataUrl'); if (savedImage && currentImage) { currentImage.src = savedImage; } else if (currentImage) { currentImage.src = 'assets/profile.png'; } 
-            } else {
-                 if(typeof showAlert === 'function') showAlert("Sessão não encontrada. Faça login.", "warning", alertPlaceholderProfile);
-                 setTimeout(() => { window.location.href = 'index.html'; }, 2000); 
-            }
-             if (imageInput && currentImage) { imageInput.addEventListener('change', function(event) { const file = event.target.files[0]; if (file && file.type.startsWith('image/')) { const reader = new FileReader(); reader.onload = function(e) { currentImage.src = e.target.result; }; reader.onerror = function(e) { if(typeof showAlert === 'function') showAlert("Erro ao ler imagem.", "danger", alertPlaceholderProfile); }; reader.readAsDataURL(file); } else if (file) { if(typeof showAlert === 'function') showAlert("Selecione PNG ou JPG.", "warning", alertPlaceholderProfile); imageInput.value = ''; } }); }
-            if(profileForm) { profileForm.addEventListener('submit', (e) => { e.preventDefault(); if(alertPlaceholderProfile) alertPlaceholderProfile.innerHTML = ''; const newName = nameInput.value.trim(); const newPassword = passwordInput.value; const confirmPassword = confirmPasswordInput.value; const newImageFile = imageInput.files[0]; const imageDataUrl = currentImage.src; if (!newName) { if(typeof showAlert === 'function') showAlert("Nome em branco.", "warning", alertPlaceholderProfile); return; } if (newPassword && newPassword !== confirmPassword) { if(typeof showAlert === 'function') showAlert("Senhas não coincidem.", "warning", alertPlaceholderProfile); return; } if (newPassword && newPassword.length < 3) { if(typeof showAlert === 'function') showAlert("Senha curta (mín 3).", "warning", alertPlaceholderProfile); return; } try { loggedInUser.name = newName; if (newPassword) { loggedInUser.password = newPassword; } if (newImageFile && imageDataUrl && imageDataUrl.startsWith('data:image')) { localStorage.setItem('userProfileImage_dataUrl', imageDataUrl); } localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser)); if(typeof showAlert === 'function') showAlert("Perfil atualizado!", "success", alertPlaceholderProfile); passwordInput.value = ''; confirmPasswordInput.value = ''; imageInput.value = ''; } catch (error) { if(typeof showAlert === 'function') showAlert("Erro ao salvar.", "danger", alertPlaceholderProfile); } }); }
-        });
-     </script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
