@@ -49,7 +49,7 @@ footer.login-footer { margin-top: auto; padding-top: 1.5rem; text-align: center;
 @media (max-width: 991.98px) { .order-details-body { max-height: 300px; } .product-list-area { max-height: 350px; } }
 .cursor-pointer { cursor: pointer; }
 
-
+/* Category Filters */
 .category-filters-container {
     display: flex;
     gap: 0.5rem;
@@ -57,7 +57,7 @@ footer.login-footer { margin-top: auto; padding-top: 1.5rem; text-align: center;
     flex-wrap: wrap;
 }
 .category-filters-container .btn-filter {
-    font-size: 1.5rem; 
+    font-size: 1.5rem; /* Icon size */
     padding: 0.5rem;
     line-height: 1;
     border-radius: 50%;
@@ -84,36 +84,62 @@ footer.login-footer { margin-top: auto; padding-top: 1.5rem; text-align: center;
 }
 
 /* People Count Setter (Inline in Title) */
-#selected-table-title { gap: 0.5rem; }
+#selected-table-title { gap: 0.5rem; /* Space between "Mesa X" and controls */ }
 .people-controls-inline {
     display: inline-flex;
     align-items: center;
-    gap: 0.3rem;
-    font-weight: normal; 
-    font-size: 0.95em; 
+    gap: 0.4rem; /* Slightly more gap for icons */
+    font-weight: normal; /* Keep controls less bold than title */
+    font-size: 0.95em; /* Slightly smaller than title */
+    vertical-align: middle; /* Align better with text */
 }
 .people-controls-inline .btn-people-adjust {
-    padding: 0.1rem 0.4rem;
-    font-size: 0.8em;
+    padding: 0; /* Remove padding */
+    font-size: 1.1em; /* Size relative to surrounding text */
     line-height: 1;
     border-radius: 50%;
-    width: 24px; 
-    height: 24px;
+    width: 26px; /* Adjusted size */
+    height: 26px;
     border: 1px solid #adb5bd;
-    background-color: #e9ecef;
+    background-color: #f1f3f5; /* Lighter background */
     color: #495057;
-    transition: background-color 0.15s ease-in-out;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    display: inline-flex; /* Needed for centering icon */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 .people-controls-inline .btn-people-adjust:hover {
-    background-color: #ced4da;
+    background-color: #e9ecef;
+    border-color: #6c757d;
 }
 .people-controls-inline .btn-people-adjust:active {
-     background-color: #adb5bd;
+     background-color: #dee2e6;
+     border-color: #495057;
 }
+/* Style for disabled decrease button */
+.people-controls-inline .btn-people-adjust:disabled {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+    color: #adb5bd;
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+/* Style for the number display */
 #people-display-inline {
-    min-width: 1.2em; 
+    min-width: 1.2em; /* Ensure space for number */
     text-align: center;
-    font-weight: 500;
+    font-weight: 500; /* Slightly bolder number */
+    font-size: 1.05em; /* Slightly larger number */
+    padding: 0 0.2em; /* Add a little horizontal space */
+    vertical-align: middle;
+}
+/* Style for "Pessoas" label inside controls */
+.people-controls-inline .small {
+    color: #6c757d; /* Make "Pessoas" label muted */
+    margin-left: 0.2rem; /* Space before label */
+    font-size: 0.9em; /* Slightly smaller label */
+     vertical-align: middle;
 }
 
 
@@ -127,4 +153,3 @@ body.kitchen-page > .container { flex-grow: 1; }
 
 /* Perfil */
 .perfil-footer { background-color: #fff !important; font-size: 0.875rem;}
-
