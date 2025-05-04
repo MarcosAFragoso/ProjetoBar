@@ -36,7 +36,7 @@ footer.login-footer { margin-top: auto; padding-top: 1.5rem; text-align: center;
 .table-button.selected { border-width: 3px; border-color: #0d6efd; box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.5); transform: scale(1.02) translateY(-1px); }
 .table-status { font-weight: 500; display: block; background-color: rgba(0, 0, 0, 0.25); padding: 2px 6px; border-radius: 4px; margin-top: 5px; }
 .table-button.status-fechamento .table-status { background-color: rgba(0, 0, 0, 0.35); }
-.order-details-body { max-height: 350px; overflow-y: auto; }
+.order-details-body { max-height: 350px; overflow-y: auto; padding-top: 0.5rem; } /* Added padding top */
 #order-items .list-group-item { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 1rem; font-size: 0.9rem; border: none; border-bottom: 1px solid #f1f1f1; }
 #order-items .list-group-item:last-child { border-bottom: none; }
 #order-items .item-name { flex-grow: 1; margin-right: 10px; }
@@ -49,7 +49,7 @@ footer.login-footer { margin-top: auto; padding-top: 1.5rem; text-align: center;
 @media (max-width: 991.98px) { .order-details-body { max-height: 300px; } .product-list-area { max-height: 350px; } }
 .cursor-pointer { cursor: pointer; }
 
-/* Category Filters */
+
 .category-filters-container {
     display: flex;
     gap: 0.5rem;
@@ -57,7 +57,7 @@ footer.login-footer { margin-top: auto; padding-top: 1.5rem; text-align: center;
     flex-wrap: wrap;
 }
 .category-filters-container .btn-filter {
-    font-size: 1.5rem; /* Icon size */
+    font-size: 1.5rem; 
     padding: 0.5rem;
     line-height: 1;
     border-radius: 50%;
@@ -83,33 +83,37 @@ footer.login-footer { margin-top: auto; padding-top: 1.5rem; text-align: center;
     border-color: #adb5bd;
 }
 
-/* People Count Setter */
-#people-count-setter {
-    border: 1px solid #dee2e6;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-    background-color: #f8f9fa;
-    font-size: 0.9rem;
+/* People Count Setter (Inline in Title) */
+#selected-table-title { gap: 0.5rem; }
+.people-controls-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: normal; 
+    font-size: 0.95em; 
 }
-#people-count-setter label { margin-right: 0.5rem; }
-#people-count-setter input[type="number"] {
-    width: 60px;
-    padding: 0.25rem 0.5rem;
+.people-controls-inline .btn-people-adjust {
+    padding: 0.1rem 0.4rem;
+    font-size: 0.8em;
+    line-height: 1;
+    border-radius: 50%;
+    width: 24px; 
+    height: 24px;
+    border: 1px solid #adb5bd;
+    background-color: #e9ecef;
+    color: #495057;
+    transition: background-color 0.15s ease-in-out;
+}
+.people-controls-inline .btn-people-adjust:hover {
+    background-color: #ced4da;
+}
+.people-controls-inline .btn-people-adjust:active {
+     background-color: #adb5bd;
+}
+#people-display-inline {
+    min-width: 1.2em; 
     text-align: center;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-}
-/* Hide HTML5 Up/Down arrows */
-#people-count-setter input[type=number] {
-  -webkit-appearance: none; /* Chrome, Safari, Edge, Opera */
-  -moz-appearance: textfield; /* Firefox */
-  appearance: none; /* Standard property - ADDED TO FIX LINT WARNING */
-  margin: 0; /* Also added margin reset here */
-}
-#people-count-setter input[type=number]::-webkit-inner-spin-button,
-#people-count-setter input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    font-weight: 500;
 }
 
 
@@ -123,3 +127,4 @@ body.kitchen-page > .container { flex-grow: 1; }
 
 /* Perfil */
 .perfil-footer { background-color: #fff !important; font-size: 0.875rem;}
+

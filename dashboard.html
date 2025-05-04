@@ -40,13 +40,15 @@
                         <div class="card shadow-sm h-100">
                             <div class="card-header fw-semibold">Visão Geral das Mesas</div>
                             <div class="card-body bg-light tables-area-container" id="tables-area">
-                                </div>
+                                <!-- Table buttons render here -->
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-5 col-xl-4 order-lg-2">
                         <div class="card shadow-sm mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
-                                <h5 class="mb-0 me-auto" id="selected-table-title">Selecione Mesa</h5>
+                                <!-- Title will now include people count -->
+                                <h5 class="mb-0 me-auto d-flex align-items-center" id="selected-table-title">Selecione Mesa</h5>
                                 <div class="btn-group btn-group-sm">
                                     <button class="btn btn-warning d-none" id="close-account-btn" title="Fechar Conta"><i class="bi bi-receipt me-1"></i>Fechar</button>
                                     <button class="btn btn-success d-none" id="reopen-table-btn" title="Reabrir Mesa"><i class="bi bi-unlock me-1"></i>Reabrir</button>
@@ -54,15 +56,15 @@
                                 </div>
                             </div>
                             <div class="card-body order-details-body" id="order-details">
-                                <div id="people-count-setter" class="mb-2 text-center" style="display: none;">
-                                   </div>
+                                <!-- Old people-count-setter div is REMOVED -->
                                 <ul class="list-group list-group-flush" id="order-items"><li class="list-group-item text-muted text-center p-3">...</li></ul>
                             </div>
                              <div class="card-footer d-flex justify-content-between align-items-center fw-bold fs-5 bg-light"><span>TOTAL:</span><span id="order-total">R$ 0,00</span></div>
                         </div>
 
                         <div id="product-category-filters" class="mb-3 text-center category-filters-container">
-                             </div>
+                             <!-- Category filter icons render here -->
+                         </div>
 
                          <div class="card shadow-sm" id="add-product-card">
                             <div class="card-header fw-semibold">Adicionar Produto (<span id="product-category-name">Todos</span>)</div>
