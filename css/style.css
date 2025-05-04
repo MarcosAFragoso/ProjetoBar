@@ -68,7 +68,7 @@ footer.login-footer { margin-top: auto; padding-top: 1.5rem; text-align: center;
 
 
 /* Cozinha INLINE VIEW (Admin Only) */
-/* Seletor #kitchen-orders-display-inline removido pois estava vazio */
+/* No styles needed for the container itself unless layout issues arise */
 .kitchen-order-card { margin-bottom: 1rem; }
 .kitchen-item-list { padding-left: 1.2rem; font-size: 0.9rem; }
 .kitchen-item-list li { margin-bottom: 0.2rem; }
@@ -81,5 +81,4 @@ body.admin-view #details-column { display: none !important; }
 /* Perfil */
 .perfil-footer { background-color: #fff !important; font-size: 0.875rem;}
 
-
-/* REMOVED EMPTY RULESETS comment now accurate */
+/* Style removed for #kitchen-orders-display-inline as it wasn't needed */
