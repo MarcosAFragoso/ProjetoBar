@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resetar Senha - Bar Code</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+</head>
+<body class="form-page-body"> 
+    <div class="form-page-wrapper container">
+        <div class="col-md-6 col-lg-5 col-xl-4">
+            <div class="card shadow-sm">
+                <div class="card-header text-center">
+                    <img src="assets/logo.png" alt="Logo Bar Code" style="max-height: 50px; margin-bottom: 0.5rem;">
+                    <h2 class="h4 mb-0">Resetar Senha</h2>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted text-center small mb-3">Insira seu e-mail para enviarmos um link de redefinição de senha.</p>
+                    <div id="reset-alert-placeholder" class="mb-3"></div>
+                    <form id="resetPasswordForm" novalidate>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="resetEmail" placeholder="Seu e-mail" required>
+                            <label for="resetEmail">Seu e-mail</label>
+                        </div>
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary">Enviar Link</button>
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <a href="index.html" class="text-decoration-none small"><i class="bi bi-arrow-left"></i> Voltar para Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="form-page-footer">
+        Bar Code - Bar e Restaurante © 2025
+    </footer>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+        const resetForm = document.getElementById('resetPasswordForm');
+        if (resetForm) {
+            const resetAlertPlaceholder = document.getElementById('reset-alert-placeholder');
+            resetForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const emailInput = document.getElementById('resetEmail');
+                if (resetAlertPlaceholder) resetAlertPlaceholder.innerHTML = '';
+                if (!emailInput.value.trim()) {
+                    showAlertInline('Por favor, insira seu e-mail.', 'warning', resetAlertPlaceholder);
+                    return;
+                }
+                showAlertInline(`Se o e-mail ${emailInput.value} estiver cadastrado, um link de reset foi enviado.`, 'success', resetAlertPlaceholder);
+                emailInput.value = '';
+            });
+        }
+        function showAlertInline(message, type = 'info', placeholder) {
+            if (!placeholder) return;
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show m-0`;
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = `<div>${message}</div><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+            placeholder.appendChild(alertDiv);
+        }
+    </script>
+</body>
+</html>

@@ -3,7 +3,30 @@ body { overflow-x: hidden; min-height: 100vh; font-family: system-ui, -apple-sys
 :focus-visible { outline: 2px solid #0d6efd; outline-offset: 2px; box-shadow: none !important; }
 :focus:not(:focus-visible) { outline: none !important; box-shadow: none !important; }
 
-/* Login */
+/* Login, Reset Senha, Cadastro Pages - Shared Styles */
+.form-page-wrapper {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2rem; 
+    padding-bottom: 2rem; 
+}
+.form-page-footer {
+    flex-shrink: 0; 
+    text-align: center;
+    padding: 1rem 0;
+    border-top: 1px solid #dee2e6;
+    background-color: #f8f9fa; 
+    color: #6c757d;
+}
+body.form-page-body { 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Login Page Specific */
 .login-wrapper { display: flex; min-height: 100vh; background-color: #f8f9fa; }
 .login-image-col { flex: 1 1 55%; background-image: url('../assets/back.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; }
 .login-form-col { flex: 1 1 45%; background-color: #212529; color: #ced4da; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1.5rem; }
@@ -49,16 +72,14 @@ footer.login-footer { margin-top: auto; padding-top: 1.5rem; text-align: center;
 @media (max-width: 991.98px) { .order-details-body { max-height: 300px; } .product-list-area { max-height: 350px; } }
 .cursor-pointer { cursor: pointer; }
 
-/* Category Filters */
 .category-filters-container { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
 .category-filters-container .btn-filter { font-size: 1.5rem; padding: 0.5rem; line-height: 1; border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
 .category-filters-container .btn-filter.active { background-color: #0d6efd; color: #fff; box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.3); }
 .category-filters-container .btn-filter:not(.active) { background-color: #e9ecef; color: #495057; border: 1px solid #dee2e6; }
 .category-filters-container .btn-filter:not(.active):hover { background-color: #ced4da; border-color: #adb5bd; }
 
-/* People Count Setter (Inline in Title) */
 #selected-table-title { gap: 0.5rem; }
-.people-controls-inline { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: normal; font-size: 0.95em; vertical-align: middle; }
+.people-controls-inline { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: normal; font-size: 0.95em; vertical-align: middle; margin-left: 0.5rem; }
 .people-controls-inline .btn-people-adjust { padding: 0; font-size: 1.1em; line-height: 1; border-radius: 50%; width: 26px; height: 26px; border: 1px solid #adb5bd; background-color: #f1f3f5; color: #495057; transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
 .people-controls-inline .btn-people-adjust:hover { background-color: #e9ecef; border-color: #6c757d; }
 .people-controls-inline .btn-people-adjust:active { background-color: #dee2e6; border-color: #495057; }
@@ -66,19 +87,15 @@ footer.login-footer { margin-top: auto; padding-top: 1.5rem; text-align: center;
 #people-display-inline { min-width: 1.2em; text-align: center; font-weight: 500; font-size: 1.05em; padding: 0 0.2em; vertical-align: middle; }
 .people-controls-inline .small { color: #6c757d; margin-left: 0.2rem; font-size: 0.9em; vertical-align: middle; }
 
-
-/* Cozinha INLINE VIEW (Admin Only) */
-/* No styles needed for the container itself unless layout issues arise */
-.kitchen-order-card { margin-bottom: 1rem; }
+.kitchen-order-card { margin-bottom: 1rem; border: 1px solid #dee2e6;}
+.kitchen-order-card .card-body { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.kitchen-order-card .card-footer { padding: 0.5rem 1rem; background-color: #f8f9fa; display: flex; justify-content: flex-end; gap: 0.5rem;}
 .kitchen-item-list { padding-left: 1.2rem; font-size: 0.9rem; }
 .kitchen-item-list li { margin-bottom: 0.2rem; }
 
-
 /* Admin View Specific Hides / Adjustments */
-body.admin-view #details-column { display: none !important; }
-
+body.admin-view #garcom-tools { display: none !important; }
+/* A regra vazia anterior foi removida. A lógica de display:none para #details-column para admin é feita via JS */
 
 /* Perfil */
 .perfil-footer { background-color: #fff !important; font-size: 0.875rem;}
-
-/* Style removed for #kitchen-orders-display-inline as it wasn't needed */
